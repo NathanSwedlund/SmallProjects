@@ -1,3 +1,6 @@
+// Author: Nathan Swedlund
+// Date:   07-03-2020
+
 #include <iostream>
 #include <fstream>
 #include <set>
@@ -6,44 +9,55 @@
 #include "Timer.h"
 using namespace std;
 
-struct size {
-    bool operator()(const string& first, const string& second) 
+struct SizeFunctor {
+    bool operator()(const string& first, const string& second)
     {
         return first.size() < second.size();
     }
 };
 
 int main()
-{ 
+{
+    // Reading in words from the "words.txt" file
 	vector<string> allWords;
-	cout<<"getting allWords...\n";
+	cout<<"Reading in words...\n";
 	ifstream fin;
 	fin.open("words.txt");
-	if(fin.is_open())
+	if(fin.is_open()) // If file exists
 	{
-		string a;
-		while(fin>>a)
+        // Store all words from in "allWords"
+		string word;
+		while(fin>>word)
 		{
-			a[0] = tolower(a[0]);
-			allWords.push_back(a);
-			//allWords.push_back(a+'s');
+            // Making sure the first character is lower case
+			word[0] = tolower(word[0]);
+			allWords.push_back(word);
 		}
+        cout<<"Done.\n";
 	}
+    else // If file does not exist
+    {
+        cout<<"\"words.txt\" not found.";
+        return 0;
+    }
 
 	// Putting input characters into a set
 	string input;
-	cout<<"Done.\n\nEnter word/characters: ";
+    cout<<"-----------------------------------\n";
+    cout<<"Enter characters: ";
 	cin>>input;
 
+    // Starting timer
 	Timer t;
 	t.start();
 
+    // Inserting input characters into set
 	multiset<char> chars;
 	for (int i = 0; i < input.size(); i++)
 		chars.insert(input[i]);
 
-	vector<string> subWords;
-	// checking allWords that match
+	// Putting all words that can be created from input's characters into subWords
+    vector<string> subWords;
 	for (int i = 0; i < allWords.size(); i++)
 	{
 		multiset<char> tempChars = chars;
@@ -51,33 +65,39 @@ int main()
 		for(int x = 0; x < allWords[i].size() && isSub; x++)
 		{
 			auto itr = tempChars.find(allWords[i][x]);
-			if(itr == tempChars.end())
-				isSub = false;
+
+            // If set contains the character, remove it (to avoid duplicates), else, it is not a subword.
+			if(itr != tempChars.end())
+                tempChars.erase(itr);
 			else
-				tempChars.erase(itr);
+                isSub = false;
 		}
 
+        // Only getting subwords with a length of 3+
 		if(isSub && allWords[i].size() > 2)
 			subWords.push_back(allWords[i]);
 	}
 
-
-	size s;
+    // Sorting alphabetically, then by size (using size functor)
 	sort(subWords.begin(), subWords.end());
+
+    SizeFunctor s;
 	sort(subWords.begin(), subWords.end(), s);
 
+    // Printing subwords in segments of size
+    int size = -1;
 	for (int i = 0; i < subWords.size(); ++i)
 	{
+        if(size != subWords[i].size())
+        {
+            size = subWords[i].size();
+            cout<<"\n"<<size<<" letter words: \n";
+
+        }
 		cout<<subWords[i]<<"\n";
 	}
 
-
-
-	cout<<"program completed in "<<t.getTime()<<" seconds\n";
-	cin.ignore();
-	cin.get();
+    // Final output
+    cout<<"Found "<<subWords.size()<<" Words in "<<t.getTime()<<" seconds\n";
+    cout<<"-----------------------------------";
 }
-
-
-
-
