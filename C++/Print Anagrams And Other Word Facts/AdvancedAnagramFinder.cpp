@@ -5,6 +5,7 @@
 #include <iomanip>
 using namespace std;
 
+// Returns ture/false if the two given strings are anagrams
 bool isAnagram(string a, string b)
 {
 	// Sorting both string and checking if both are the same
@@ -13,6 +14,7 @@ bool isAnagram(string a, string b)
 	return a == b;
 }
 
+// Inserts all the individual words from the file into the given vector
 void getFileContents(vector<string>& v, string fileName)
 {
 	ifstream fin;
@@ -39,7 +41,7 @@ int main()
 	vector<string> fileWords(1000);
 	getFileContents(fileWords, "words.txt");
 
-	// Making/getting input word
+	// Getting input
 	string word;
 	cout<<"Enter word: ";
 	cin>>word;
@@ -84,7 +86,4 @@ int main()
 	}
 	else
 		cout<<'\n'<<"No words contain "<<word<<'\n';
-
-	cin.ignore();
-	cin.get();
 }
