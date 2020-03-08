@@ -5,15 +5,6 @@
 #include <iomanip>
 using namespace std;
 
-// Returns ture/false if the two given strings are anagrams
-bool isAnagram(string a, string b)
-{
-	// Sorting both string and checking if both are the same
-	sort(a.begin(), a.end());
-	sort(b.begin(), b.end());
-	return a == b;
-}
-
 // Inserts all the individual words from the file into the given vector
 void getFileContents(vector<string>& v, string fileName)
 {
@@ -55,8 +46,18 @@ int main()
 	// Finding anagrams
 	vector<string> anagrams;
 	for(auto i = fileWords.begin(); i != fileWords.end(); i++)
-		if(isAnagram(*i, word) && *i != word)
+	{
+		// Determining if the two words are anagrams
+		string b = word;
+		string a = *i;
+		sort(a.begin(), a.end());
+		sort(b.begin(), b.end());
+		isAnagram = (a==b);
+		
+		// If words are anagrams and not the same, push it to the anagram vector
+		if(isAnagram && *i != word)
 			anagrams.push_back(*i);
+	}
 
 	// finding words that contain "word"
 	vector<string> containsWord;
