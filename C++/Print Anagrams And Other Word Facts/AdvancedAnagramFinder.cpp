@@ -26,7 +26,7 @@ void getFileContents(vector<string>& v, string fileName)
 	}
 }
 
-int main() 
+int main()
 {
 	// Retrieving contents of file
 	vector<string> fileWords(1000);
@@ -52,8 +52,8 @@ int main()
 		string a = *i;
 		sort(a.begin(), a.end());
 		sort(b.begin(), b.end());
-		isAnagram = (a==b);
-		
+		bool isAnagram = (a==b);
+
 		// If words are anagrams and not the same, push it to the anagram vector
 		if(isAnagram && *i != word)
 			anagrams.push_back(*i);
@@ -74,7 +74,7 @@ int main()
 		cout<<'\n'<<word<<" is an anagram of the following:\n";
 		for(int i = 0; i != anagrams.size(); i++)
 			cout<<setw(2)<<i+1<<") "<<anagrams[i]<<'\n';
-	}	
+	}
 	else
 		cout<<'\n'<<word<<" has no anagrams.\n";
 
