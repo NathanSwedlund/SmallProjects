@@ -8,4 +8,3 @@ This inlcudes, whether or not the string is a word, a list of words that are ana
 that string and words that contain that string as a substring.
 
 ---
-The words.txt file i use in this program can be found at 
