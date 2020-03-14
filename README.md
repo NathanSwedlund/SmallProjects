@@ -9,6 +9,6 @@ Projects in this repo are organized by their (primary) technology. For example, 
 ### Technologies:
 * C++
 * Python
-* Jupyter Notebooks (These are also python, but I will keep them seperate)
+* Jupyter Notebooks (These are also python, but I will keep them seperated)
 * C#
 * Web Applications (HTML, CSS, JavaScript, MYSQL, etc.)
